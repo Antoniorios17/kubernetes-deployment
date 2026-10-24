@@ -1,0 +1,15 @@
+name: Testing Workflow
+run-name: testing-workflow-${{ github.actor }}-${{ github.run_number }}
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Testing workflow
+              run: echo "testing"
