@@ -14,6 +14,12 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Show workflow context
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch reference: $GITHUB_REF"
+          echo "Workflow revision: $GITHUB_WORKFLOW_REF"
+
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Set up AWS credentials
