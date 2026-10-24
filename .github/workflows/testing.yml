@@ -11,14 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: read
     steps:
-
       - name: Get current AWS cred
         uses: aws-actions/configure-aws-credentials@v5
         with:
           aws-region: us-east-1    
-          unset-current-credentials: true
-          role-skip-session-tagging: true
           role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
       - name: Verify AWS identity
         run: aws sts get-caller-identity
