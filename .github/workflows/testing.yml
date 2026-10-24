@@ -14,19 +14,14 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - name: Show workflow context
-        run: |
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Branch reference: $GITHUB_REF"
-          echo "Workflow revision: $GITHUB_WORKFLOW_REF"
 
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
           aws-region: us-east-1
+          role-to-assume: arn:aws:iam::434057724837:role/github-actions-role
       - name: Test credentials
         run: aws sts get-caller-identity
 
