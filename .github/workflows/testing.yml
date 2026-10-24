@@ -1,5 +1,5 @@
-name: Testing Workflow
-run-name: testing-workflow-${{ github.actor }}-${{ github.run_number }}
+name: Deployment Workflow
+run-name: deployment-workflow-${{ github.actor }}-${{ github.run_number }}
 on:
   workflow_dispatch:
   push:
@@ -7,11 +7,16 @@ on:
       - main
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
-            - name: Testing workflow
-              run: echo "testing"
-        
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Get current AWS cred
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-region: us-east-1    
+          unset-current-credentials: true
+          role-skip-session-tagging: true
+          role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
