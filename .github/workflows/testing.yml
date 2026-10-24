@@ -9,14 +9,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
     steps:
-      - name: Get current AWS cred
-        uses: aws-actions/configure-aws-credentials@v5
-        with:
-          aws-region: us-east-1    
-          role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
-      - name: Verify AWS identity
-        run: aws sts get-caller-identity
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v6.3.0
+      with:
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
+        role-session-name: MySessionName
