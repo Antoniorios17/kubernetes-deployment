@@ -8,11 +8,19 @@ on:
 
 jobs:
   deploy:
+    # This job will run on the latest version of Ubuntu
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v6.3.0
-      with:
-        aws-region: us-east-1
-        role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
-        role-session-name: MySessionName
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::434057724837:role/DeploymentRole
+          aws-region: us-east-1
+      - name: Test credentials
+        run: aws sts get-caller-identity
+        
