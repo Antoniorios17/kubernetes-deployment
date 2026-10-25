@@ -1,0 +1,28 @@
+name: Deployment Workflow
+run-name: deployment-workflow-${{ github.actor }}-${{ github.run_number }}
+on:
+  workflow_dispatch:
+
+env: 
+  AWS_REGION: us-east-1
+
+jobs:
+  deploy:
+    # This job will run on the latest version of Ubuntu
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.6
+      - name: Create Deployment AWS Profile
+        uses: antoniorios17/reusable-workflows/create-deployment-profile@main
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          target-account: Dev
