@@ -23,4 +23,4 @@ jobs:
         uses: antoniorios17/reusable-workflows/create-deployment-profile@main
         with:
           aws-region: ${{ env.AWS_REGION }}
-          target-account: Dev
+          target-account: Development
